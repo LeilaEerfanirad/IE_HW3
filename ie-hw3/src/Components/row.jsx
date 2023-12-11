@@ -1,9 +1,9 @@
 import React from 'react'
 
-function row() {
+function Row() {
   return (
     <li>row</li>
   )
 }
 
-export default row
+export default Row
