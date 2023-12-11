@@ -1,8 +1,27 @@
 import React from 'react'
 
-function Row() {
+function Row(props) {
   return (
-    <li>row</li>
+    <tr>
+      <td>
+        {props.name}
+      </td>
+      <td>
+        {props.date}
+      </td>
+      <td>
+        {props.title}
+      </td>
+      <td>
+        {props.field}
+      </td>
+      <td>
+        {props.old_value}
+      </td>
+      <td>
+        {props.new_value}
+      </td>
+    </tr>
   )
 }
 
