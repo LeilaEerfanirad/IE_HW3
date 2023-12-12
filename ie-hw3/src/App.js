@@ -2,7 +2,6 @@ import './App.css';
 import { Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import List from './Components/List';
-import Row from './Components/Row';
 
 const DATA = [
   {
@@ -933,12 +932,11 @@ function App() {
         
         
         </table>
-        
       </div>
       
       <table>
-      <List></List>
-      {DATA.map((r) => {
+      <List items={DATA}/>
+      {/* {DATA.map((r) => {
           return <tr>
             <td>{r.new_value}</td>
             <td>{r.old_value}</td>
@@ -947,7 +945,7 @@ function App() {
             <td>{r.date}</td>
             <td>{r.name}</td>
           </tr>
-      })}
+      })} */}
       </table>
       
       
