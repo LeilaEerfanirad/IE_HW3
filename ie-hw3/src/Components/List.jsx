@@ -5,13 +5,13 @@ function List(props) {
   return (
     <table>
         <tr>
-        <th>مقدار جدید</th>
-        <th>مقدار قبلی</th>
-        <th>فیلد</th>
-        <th>نام آگهی</th>
-        <th>تاریخ</th>
-        <th>نام تغییر دهنده</th>
-    </tr>
+            <th>مقدار جدید</th>
+            <th>مقدار قبلی</th>
+            <th>فیلد</th>
+            <th>نام آگهی</th>
+            <th>تاریخ</th>
+            <th>نام تغییر دهنده</th>
+        </tr>
     
        {props.items.map(item => <Row 
        key={item.id}
