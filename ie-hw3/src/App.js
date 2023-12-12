@@ -911,18 +911,10 @@ function App() {
       <div className='head'>
         <table>
           <tr>
-            <th>
-              نام تغییر دهنده
-            </th>
-            <th>
-              تاریخ
-            </th>
-            <th>
-              نام آگهی
-            </th>
-            <th>
-                فیلد
-            </th>
+            <th>فیلد</th>
+            <th>نام آگهی</th>
+            <th>تاریخ</th>
+            <th>نام تغییر دهنده</th>
           </tr>
           <tr>
             <td>
@@ -948,22 +940,12 @@ function App() {
       <List></List>
       {DATA.map((r) => {
           return <tr>
+            <td>{r.new_value}</td>
+            <td>{r.old_value}</td>
+            <td>{r.field}</td>
+            <td>{r.title}</td>
+            <td>{r.date}</td>
             <td>{r.name}</td>
-        <td>
-          {r.date}
-        </td>
-        <td>
-          {r.title}
-        </td>
-        <td>
-          {r.field}
-        </td>
-        <td>
-          {r.old_value}
-        </td>
-        <td>
-          {r.new_value}
-        </td>
           </tr>
       })}
       </table>
