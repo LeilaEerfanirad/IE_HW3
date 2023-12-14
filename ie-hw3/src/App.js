@@ -906,15 +906,20 @@ const DATA = [
       "new_value": "جی ۷ پرو ۳۲ گیگ j7 pro 32 gig"
   }];
 function App() {
-  const field_value = document.getElementById("inp1").value;
-  const ad_value = document.getElementById("inp2").value;
-  const date_value = document.getElementById("inp3").value;
-  const changer_value = document.getElementById("inp4").value;
-  console.log(field_value);
+  const field_value = document.getElementById("inp1");
+  const ad_value = document.getElementById("inp2");
+  const date_value = document.getElementById("inp3");
+  const changer_value = document.getElementById("inp4");
+  console.log(ad_value.value);
+  const filteredData = DATA.filter(d => {
+    const isFieldMatch = field_value && field_value.value !== '' ? d.field === field_value.value : true;
+    const isAdMatch = ad_value && ad_value.value !== '' ? d.title.includes(ad_value.value) : true;
+    const isDateMatch = date_value && date_value.value !== '' ? d.date === date_value.value : true;
+    const isChangerMatch = changer_value && changer_value.value !== '' ? d.name === changer_value.value : true;
   
-  const field_array = DATA.filter(d => d.field === (field_value.length == 0)? d.field : field_value);
-  const field_narray = DATA.filter(d => d.field != 'عنوان');
-  const f = field_array.concat(field_narray);
+    return isFieldMatch && isAdMatch && isDateMatch && isChangerMatch;
+  });
+  
   return (
     <div className="App">
       <div className='head'>
@@ -945,11 +950,9 @@ function App() {
       </div>
       
       <table>
-        <script>
-          {/* {const field = document.getElementById("inp1");} */}
-        </script> 
+         
         
-      <List items={f}/>
+      <List items={filteredData}/>
       
       
       </table>
