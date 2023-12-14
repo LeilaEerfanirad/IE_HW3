@@ -1,6 +1,7 @@
 import './App.css';
-import React, { useState } from 'react';
-import { Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch, useNavigate } from 'react-router-dom';
+
 import List from './Components/List';
 
 const DATA = [
@@ -911,9 +912,7 @@ function App() {
       date: '',
       changer: ''
     });
-  
     const [filteredData, setFilteredData] = useState(DATA);
-  
     const handleSearch = () => {
       const newFilteredData = DATA.filter(d => {
         const isFieldMatch = filters.field !== '' ? d.field === filters.field : true;
@@ -923,10 +922,45 @@ function App() {
   
         return isFieldMatch && isAdMatch && isDateMatch && isChangerMatch;
       });
+    
   
       setFilteredData(newFilteredData);
+     
+    };
+    let path = '/1';
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const navigate = useNavigate();
+    useEffect(() => {
+      const data = filteredData;
+      // Calculate total pages
+      setTotalPages(Math.ceil(data.length / 20));
+  
+      // Reset current page to 1 when filters change
+      setCurrentPage(1);
+  
+      // Navigate to first page
+      path = '/1';
+    }, [filters]);
+  
+    const handleNextPage = () => {
+      if (currentPage < totalPages) {
+        setCurrentPage(currentPage + 1);
+        path = '/'+currentPage;
+      }
     };
   
+    const handlePrevPage = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+        path = '/'+currentPage;
+      }
+    };
+    
+    const start = (currentPage - 1) * 20;
+    const end = start + 20;
+    const paginatedData = filteredData.slice(start, end);
+    console.log(path);
     return (
       <div className="App">
         <div className='head'>
@@ -975,7 +1009,7 @@ function App() {
                 </td>
                 <td>
                   <button onClick={handleSearch}>
-                    Search
+                    Filter
                   </button>
                 </td>
               </tr>
@@ -984,8 +1018,16 @@ function App() {
         </div>
   
         <table>
-          <List items={filteredData} />
+          <List items={paginatedData} />
         </table>
+        <div>
+          <button onClick={handlePrevPage}>Previous</button>
+          <button onClick={handleNextPage}>Next</button>
+
+          {/* {paginatedData.map((item, index) => (
+          <div key={index}>{item}</div>
+          ))} */}
+      </div>
       </div>
     );
   }
