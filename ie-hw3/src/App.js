@@ -1,4 +1,5 @@
 import './App.css';
+import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import List from './Components/List';
@@ -905,59 +906,90 @@ const DATA = [
       "old_value": "پژو ٢٠٦ فرانسوى ٨١",
       "new_value": "جی ۷ پرو ۳۲ گیگ j7 pro 32 gig"
   }];
-function App() {
-  const field_value = document.getElementById("inp1");
-  const ad_value = document.getElementById("inp2");
-  const date_value = document.getElementById("inp3");
-  const changer_value = document.getElementById("inp4");
-  console.log(ad_value.value);
-  const filteredData = DATA.filter(d => {
-    const isFieldMatch = field_value && field_value.value !== '' ? d.field === field_value.value : true;
-    const isAdMatch = ad_value && ad_value.value !== '' ? d.title.includes(ad_value.value) : true;
-    const isDateMatch = date_value && date_value.value !== '' ? d.date === date_value.value : true;
-    const isChangerMatch = changer_value && changer_value.value !== '' ? d.name === changer_value.value : true;
+  function App() {
+    const [filters, setFilters] = useState({
+      field: '',
+      ad: '',
+      date: '',
+      changer: ''
+    });
   
-    return isFieldMatch && isAdMatch && isDateMatch && isChangerMatch;
-  });
+    const [filteredData, setFilteredData] = useState(DATA);
   
-  return (
-    <div className="App">
-      <div className='head'>
+    const handleSearch = () => {
+      const newFilteredData = DATA.filter(d => {
+        const isFieldMatch = filters.field !== '' ? d.field === filters.field : true;
+        const isAdMatch = filters.ad !== '' ? d.title.includes(filters.ad) : true;
+        const isDateMatch = filters.date !== '' ? d.date === filters.date : true;
+        const isChangerMatch = filters.changer !== '' ? d.name === filters.changer : true;
+  
+        return isFieldMatch && isAdMatch && isDateMatch && isChangerMatch;
+      });
+  
+      setFilteredData(newFilteredData);
+    };
+  
+    return (
+      <div className="App">
+        <div className='head'>
+          <table>
+            <thead>
+              <tr>
+                <th>فیلد</th>
+                <th>نام آگهی</th>
+                <th>تاریخ</th>
+                <th>نام تغییر دهنده</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <input
+                    className='inp'
+                    id='inp1'
+                    value={filters.field}
+                    onChange={(e) => setFilters({ ...filters, field: e.target.value })}
+                  />
+                </td>
+                <td>
+                  <input
+                    className='inp'
+                    id='inp2'
+                    value={filters.ad}
+                    onChange={(e) => setFilters({ ...filters, ad: e.target.value })}
+                  />
+                </td>
+                <td>
+                  <input
+                    className='inp'
+                    id='inp3'
+                    value={filters.date}
+                    onChange={(e) => setFilters({ ...filters, date: e.target.value })}
+                  />
+                </td>
+                <td>
+                  <input
+                    className='inp'
+                    id='inp4'
+                    value={filters.changer}
+                    onChange={(e) => setFilters({ ...filters, changer: e.target.value })}
+                  />
+                </td>
+                <td>
+                  <button onClick={handleSearch}>
+                    Search
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
         <table>
-          <tr>
-            <th>فیلد</th>
-            <th>نام آگهی</th>
-            <th>تاریخ</th>
-            <th>نام تغییر دهنده</th>
-          </tr>
-          <tr>
-            <td>
-              <input className='inp' id='inp1'></input>
-            </td>
-            <td>
-              <input className='inp' id='inp2'></input>
-            </td>
-            <td>
-              <input className='inp' id='inp3'></input>
-            </td>
-            <td>
-              <input className='inp' id='inp4'></input>
-            </td>
-          </tr>
-        
-        
+          <List items={filteredData} />
         </table>
       </div>
-      
-      <table>
-         
-        
-      <List items={filteredData}/>
-      
-      
-      </table>
-    </div>
-  );
-}
-
-export default App;
+    );
+  }
+  
+  export default App;
