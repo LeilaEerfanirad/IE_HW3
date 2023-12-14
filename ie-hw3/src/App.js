@@ -1,9 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
-import MainPage from './pages/MainPage';
 import List from './Components/List';
-import Row from './Components/Row';
 
 const DATA = [
   {
