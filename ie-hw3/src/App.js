@@ -906,7 +906,7 @@ const DATA = [
       "old_value": "پژو ٢٠٦ فرانسوى ٨١",
       "new_value": "جی ۷ پرو ۳۲ گیگ j7 pro 32 gig"
   }];
-  function App() {
+function App() {
     const [filters, setFilters] = useState({
       field: '',
       ad: '',
