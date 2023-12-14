@@ -22,6 +22,7 @@ function List(props) {
        old_value={item.old_value}
        new_value={item.new_value}
        />)} 
+       
     
     </table>
     

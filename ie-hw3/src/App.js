@@ -2,6 +2,7 @@ import './App.css';
 import { Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import List from './Components/List';
+import Row from './Components/Row';
 
 const DATA = [
   {
@@ -905,6 +906,15 @@ const DATA = [
       "new_value": "جی ۷ پرو ۳۲ گیگ j7 pro 32 gig"
   }];
 function App() {
+  const field_value = document.getElementById("inp1").value;
+  const ad_value = document.getElementById("inp2").value;
+  const date_value = document.getElementById("inp3").value;
+  const changer_value = document.getElementById("inp4").value;
+  console.log(field_value);
+  
+  const field_array = DATA.filter(d => d.field === (field_value.length == 0)? d.field : field_value);
+  const field_narray = DATA.filter(d => d.field != 'عنوان');
+  const f = field_array.concat(field_narray);
   return (
     <div className="App">
       <div className='head'>
@@ -917,16 +927,16 @@ function App() {
           </tr>
           <tr>
             <td>
-              <input className='inp'></input>
+              <input className='inp' id='inp1'></input>
             </td>
             <td>
-              <input className='inp'></input>
+              <input className='inp' id='inp2'></input>
             </td>
             <td>
-              <input className='inp'></input>
+              <input className='inp' id='inp3'></input>
             </td>
             <td>
-              <input className='inp'></input>
+              <input className='inp' id='inp4'></input>
             </td>
           </tr>
         
@@ -935,20 +945,14 @@ function App() {
       </div>
       
       <table>
-      <List items={DATA}/>
-      {/* {DATA.map((r) => {
-          return <tr>
-            <td>{r.new_value}</td>
-            <td>{r.old_value}</td>
-            <td>{r.field}</td>
-            <td>{r.title}</td>
-            <td>{r.date}</td>
-            <td>{r.name}</td>
-          </tr>
-      })} */}
+        <script>
+          {/* {const field = document.getElementById("inp1");} */}
+        </script> 
+        
+      <List items={f}/>
+      
+      
       </table>
-      
-      
     </div>
   );
 }
