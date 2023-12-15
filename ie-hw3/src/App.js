@@ -910,7 +910,8 @@ function App() {
       field: '',
       ad: '',
       date: '',
-      changer: ''
+      changer: '',
+      isFavorite: false
     });
     const [filteredData, setFilteredData] = useState(DATA);
     const handleSearch = () => {
@@ -923,20 +924,19 @@ function App() {
         return isFieldMatch && isAdMatch && isDateMatch && isChangerMatch;
       });
     
-  
+      
       setFilteredData(newFilteredData);
+      setTotalPages(Math.ceil(newFilteredData.length / 20));
+      setCurrentPage(1);
      
     };
 
-    const handleToggleFavorite = (id) => {
-      // Toggle the favorite status for the specified ID
-      const updatedData = filteredData.map(item =>
-        item.id === id ? { ...item, isFavorite: !item.isFavorite } : item
-      );
-      setFilteredData(updatedData);
-      // Save the updated data to local storage
-      localStorage.setItem('favoriteData', JSON.stringify(updatedData));
+    const getFavoriteRows = () => {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      return DATA.filter(item => favorites.includes(item.id));
     };
+  
+    const favoriteRows = getFavoriteRows();
     
     const [currentPage, setCurrentPage] = useState(1);
     
@@ -964,7 +964,8 @@ function App() {
     const start = (currentPage - 1) * 20;
     const end = start + 20;
     const paginatedData = filteredData.slice(start, end);
-    console.log(currentPage);
+   
+    console.log(totalPages);
        
     return (
       <div className="App">

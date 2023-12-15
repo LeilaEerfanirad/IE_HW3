@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Row(props) {
+  
+  const [rowStyle,setRowStyle] = useState({
+    backgroundColor: props.isFavorite ? 'green' : 'inherit' ,
+    color: props.isFavorite ? 'white' : 'inherit'
+  });
+  const [btnTxt,setBtnStyle] = useState({
+    color: props.isFavorite ? 'green' : 'black',
+    txt: props.isFavorite ? 'UnMark Favorite' : 'Mark as Favorite'}
+  );
+  
   const handleFavoriteClick = () => {
-    // Toggle the favorite status and update local storage
-    props.toggleFavorite(props.id);
+    const f = props.onFavoriteClick(props.id);
+   
+    setRowStyle();
+    setBtnStyle();
   };
   return (
-    <tr>
+    <tr style={rowStyle}>
       <td>{props.new_value}</td>
       <td>{props.old_value}</td>
       <td>{props.field}</td>
@@ -14,9 +26,9 @@ function Row(props) {
       <td>{props.date}</td>
       <td>{props.name}</td>
       <td>
-      <button onClick={handleFavoriteClick}>
-          {props.isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-        </button>
+      <button onClick={handleFavoriteClick} style={btnTxt}>
+        favorite
+      </button>
       </td>
     </tr>
   )
