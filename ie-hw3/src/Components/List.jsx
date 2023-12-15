@@ -11,16 +11,19 @@ function List(props) {
             <th>نام آگهی</th>
             <th>تاریخ</th>
             <th>نام تغییر دهنده</th>
+        
         </tr>
     
        {props.items.map(item => <Row 
        key={item.id}
-       name={item.name}
+      
+       name={item.id}
        date={item.date}
        title={item.title}
        field={item.field}
        old_value={item.old_value}
        new_value={item.new_value}
+       
        />)} 
        
     

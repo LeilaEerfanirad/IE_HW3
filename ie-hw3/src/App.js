@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, useNavigate } from 'react-router-dom';
+import { Routes , Route , useNavigate } from 'react-router-dom';
 
 import List from './Components/List';
 
@@ -927,42 +927,48 @@ function App() {
       setFilteredData(newFilteredData);
      
     };
-    let path = '/1';
+
+    const handleToggleFavorite = (id) => {
+      // Toggle the favorite status for the specified ID
+      const updatedData = filteredData.map(item =>
+        item.id === id ? { ...item, isFavorite: !item.isFavorite } : item
+      );
+      setFilteredData(updatedData);
+      // Save the updated data to local storage
+      localStorage.setItem('favoriteData', JSON.stringify(updatedData));
+    };
+    
     const [currentPage, setCurrentPage] = useState(1);
+    
     const [totalPages, setTotalPages] = useState(0);
     const navigate = useNavigate();
     useEffect(() => {
       const data = filteredData;
-      // Calculate total pages
       setTotalPages(Math.ceil(data.length / 20));
-  
-      // Reset current page to 1 when filters change
       setCurrentPage(1);
   
-      // Navigate to first page
-      path = '/1';
     }, [filters]);
   
     const handleNextPage = () => {
       if (currentPage < totalPages) {
-        setCurrentPage(currentPage + 1);
-        path = '/'+currentPage;
+        setCurrentPage(currentPage + 1); 
       }
     };
   
     const handlePrevPage = () => {
       if (currentPage > 1) {
         setCurrentPage(currentPage - 1);
-        path = '/'+currentPage;
       }
     };
     
     const start = (currentPage - 1) * 20;
     const end = start + 20;
     const paginatedData = filteredData.slice(start, end);
-    console.log(path);
+    console.log(currentPage);
+       
     return (
       <div className="App">
+       
         <div className='head'>
           <table>
             <thead>
@@ -1018,17 +1024,17 @@ function App() {
         </div>
   
         <table>
-          <List items={paginatedData} />
+          <List items={paginatedData}  />
         </table>
         <div>
           <button onClick={handlePrevPage}>Previous</button>
           <button onClick={handleNextPage}>Next</button>
-
-          {/* {paginatedData.map((item, index) => (
-          <div key={index}>{item}</div>
-          ))} */}
+        </div>
+       
       </div>
-      </div>
+          
+        
+      
     );
   }
   
